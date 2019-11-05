@@ -12,17 +12,12 @@ export class CustomSelect2Directive {
   }
 
   @HostListener('keydown', ['$event']) onKeyDown(e: any) { 
-    console.log(e);
-    let emptyObject = {};
-    let mergedObject = this.MergeRecursive(emptyObject,e);
-    if(mergedObject['key'] == 'Down') {
-      mergedObject['key'] = 'ArrowDown';
+    if(e['key'] == 'Down' || e['key'] == 'Up'){
+      let mergedObject = this.MergeRecursive({},e);
+      if(mergedObject['key'] == 'Down') mergedObject['key'] = 'ArrowDown';
+      if(mergedObject['key'] == 'Up') mergedObject['key'] = 'ArrowUp';
+      this.hostSel.keyDown(mergedObject as KeyboardEvent)
     }
-    else if(mergedObject['key'] == 'Up') {
-      mergedObject['key'] = 'ArrowUp';
-    }
-    this.hostSel.keyDown(mergedObject as KeyboardEvent);
-    //console.log(e);
   }
 
 
